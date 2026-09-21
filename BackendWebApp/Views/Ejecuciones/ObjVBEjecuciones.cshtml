@@ -1,0 +1,32 @@
+@model IEnumerable<BackendWebApp.Models.DetalleOperacion>
+<h1>Listado de Ejecuciones -VB</h1>
+<table class="table table-hover table-bordered table-sm">
+    <thead>
+        <tr class="table-info"> 
+        <th><center><strong>@Html.DisplayNameFor(model => model.IdDetalleOperacion)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.CabeceraOperacion.Cliente)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.Descripcion)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.Cantidad)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.Importe)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.Igv)</strong></center></th>
+        <th><center><strong>@Html.DisplayNameFor(model => model.Total)</strong></center></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Ejecuciones != null)
+        {
+            @foreach (var ejecucion in ViewBag.Ejecuciones)
+            {
+                <tr>
+                    <td align="center"> @ejecucion.IdDetalleOperacion</td>
+                    <td align="center">@ejecucion.CabeceraOperacion?.Cliente</td>
+                    <td align="center">@ejecucion.Descripcion</td>
+                    <td align="center">@ejecucion.Cantidad</td>
+                    <td align="center">@ejecucion.Importe</td>
+                    <td align="center">@ejecucion.Igv</td>
+                    <td >@ejecucion.Total</td>
+                </tr>
+            }
+        }
+    </tbody>
+ </table>

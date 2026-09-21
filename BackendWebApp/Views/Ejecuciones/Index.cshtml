@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BackendWebApp.Models.DetalleOperacion>
+<br>
+<h2>Lista de Ejecuciones</h2>
+<hr>
+<a  asp-action="create">Create</a>
+<table class="table table-hover table-bordered table-sm">
+    <thead>
+        <tr class="table-info">
+            <th><center><strong>Id</strong></center></th>
+            <th><center><strong>Cliente</strong></center></th>
+            
+            <th><center><strong>Descripcion</strong></center></th>
+            <th><center><strong>Cantidad</strong></center></th>
+            <th><center><strong>Importe</strong></center></th>
+            <th><center><strong>IGV</strong></center></th>
+            <th><center><strong>Total</strong></center></th>
+            <th><center><strong>Opciones</strong></center></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ejecucion in Model)
+        {
+            <tr>
+                <td>@ejecucion.IdDetalleOperacion</td>
+                <td>@ejecucion.CabeceraOperacion.Cliente</td>
+                <td>@ejecucion.Descripcion</td>
+                <td>@ejecucion.Cantidad</td>
+                <td>@ejecucion.Importe</td>
+                <td>@ejecucion.Igv</td>
+                <td>@ejecucion.Total</td>
+                <td align=""> 
+                    <a class="btn-info btn-sm" asp-action="Edit" asp-route-id="@ejecucion.IdDetalleOperacion">Edit</a> 
+                    <a class="btn-danger btn-sm" asp-action="Delete" asp-route-id="@ejecucion.IdDetalleOperacion">Details</a>
+                    <a class="btn-danger btn-sm" asp-action="Delete" asp-route-id="@ejecucion.IdDetalleOperacion">Delete</a>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>

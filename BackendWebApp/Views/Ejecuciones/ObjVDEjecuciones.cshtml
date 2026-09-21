@@ -1,0 +1,46 @@
+@using BackendWebApp.Models
+
+@{
+    ViewData["Title"] = "Ejecuciones - ViewData";
+    var listaEjecuciones = ViewData["Ejecuciones"] as IEnumerable<DetalleOperacion>;
+}
+
+<br />
+<h2>@ViewData["Titulo"]</h2>
+
+<table class="table table-hover table-bordered table-sm">
+    <thead>
+        <tr class="table-info">
+            <th><center><strong>Id</strong></center></th>
+            <th><center><strong>Cliente</strong></center></th>
+            <th><center><strong>Descripción</strong></center></th>
+            <th><center><strong>Cantidad</strong></center></th>
+            <th><center><strong>Importe</strong></center></th>
+            <th><center><strong>IGV</strong></center></th>
+            <th><center><strong>Total</strong></center></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (listaEjecuciones != null)
+        {
+            @foreach (var ejecucion in listaEjecuciones)
+            {
+                <tr>
+                    <td align="center">@ejecucion.IdDetalleOperacion</td>
+                    <td align="center">@ejecucion.CabeceraOperacion?.Cliente</td>
+                    <td align="center">@ejecucion.Descripcion</td>
+                    <td align="center">@ejecucion.Cantidad</td>
+                    <td align="center">@ejecucion.Importe</td>
+                    <td align="center">@ejecucion.Igv</td>
+                    <td>@ejecucion.Total</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-danger">No se encontraron ejecuciones disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>
