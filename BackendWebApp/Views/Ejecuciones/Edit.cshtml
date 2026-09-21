@@ -1,7 +1,7 @@
 @model BackendWebApp.Models.DetalleOperacion
 
 @{
-    ViewData["Title"] = "Crear Operación";
+    ViewData["Title"] = "Editar Operación";
 }
 
 <div class="container mt-4">
@@ -9,16 +9,18 @@
         <div class="col-md-7 col-lg-6">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white py-3">
-                    <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Nueva Operación</h4>
+                    <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Editar Operación #@Model.IdDetalleOperacion</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form asp-action="Create" method="post">
+                    <form asp-action="Edit" method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <input type="hidden" asp-for="IdDetalleOperacion" />
 
                         <div class="mb-3">
                             <label asp-for="IdCabeceraOperacion" class="form-label fw-bold">Cliente</label>
                             <select asp-for="IdCabeceraOperacion" class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.CabEjecuciones, "IdCabeceraOperacion", "Cliente"))">
+                                    asp-items="@(new SelectList(ViewBag.CabEjecuciones, "IdCabeceraOperacion", "Cliente", Model.IdCabeceraOperacion))">
                                 <option value="">-- Seleccione un Cliente --</option>
                             </select>
                             <span asp-validation-for="IdCabeceraOperacion" class="text-danger small"></span>
@@ -26,14 +28,14 @@
 
                         <div class="mb-3">
                             <label asp-for="Descripcion" class="form-label fw-bold">Descripción</label>
-                            <input asp-for="Descripcion" class="form-control" placeholder="Ingrese la descripción de la operación" />
+                            <input asp-for="Descripcion" class="form-control" placeholder="Ingrese la descripción" />
                             <span asp-validation-for="Descripcion" class="text-danger small"></span>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Cantidad" class="form-label fw-bold">Cantidad</label>
-                                <input asp-for="Cantidad" type="number" class="form-control" min="1" value="1" />
+                                <input asp-for="Cantidad" type="number" class="form-control" min="1" />
                                 <span asp-validation-for="Cantidad" class="text-danger small"></span>
                             </div>
 
@@ -61,7 +63,7 @@
                                 Regresar al Listado
                             </a>
                             <button type="submit" class="btn btn-primary px-4">
-                                Guardar Operación
+                                Guardar Cambios
                             </button>
                         </div>
                     </form>

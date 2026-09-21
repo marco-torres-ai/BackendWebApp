@@ -1,0 +1,52 @@
+@model BackendWebApp.Models.DetalleOperacion
+
+@{
+    ViewData["Title"] = "Eliminar Operación";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar Eliminación</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                        <div>
+                            <strong>¡Atención!</strong> ¿Está seguro de que desea eliminar permanentemente este registro?
+                        </div>
+                    </div>
+
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 text-muted">ID:</dt>
+                        <dd class="col-sm-8 fw-bold">@Model.IdDetalleOperacion</dd>
+
+                        <dt class="col-sm-4 text-muted">Cliente:</dt>
+                        <dd class="col-sm-8 fw-semibold">@(Model.CabeceraOperacion?.Cliente ?? "No asignado")</dd>
+
+                        <dt class="col-sm-4 text-muted">Descripción:</dt>
+                        <dd class="col-sm-8">@Model.Descripcion</dd>
+
+                        <dt class="col-sm-4 text-muted">Cantidad:</dt>
+                        <dd class="col-sm-8"><span class="badge bg-secondary">@Model.Cantidad</span></dd>
+
+                        <dt class="col-sm-4 text-muted">Total:</dt>
+                        <dd class="col-sm-8 text-danger fw-bold">S/ @Model.Total.ToString("N2")</dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-light p-3 d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        Cancelar
+                    </a>
+                    <form asp-action="Delete" method="post" class="d-inline">
+                        <input type="hidden" asp-for="IdDetalleOperacion" />
+                        <button type="submit" class="btn btn-danger px-4">
+                            Sí, Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

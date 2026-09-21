@@ -60,5 +60,95 @@ namespace BackendWebApp.Controllers
                 return View(Entidad);
             }
         }
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var da = new DADetalleEjecuciones();
+            var entidad = da.GetDetalleOperacionById(id.Value);
+            if (entidad == null)
+            {
+                return NotFound();
+            }
+
+            return View(entidad);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var da = new DADetalleEjecuciones();
+            var entidad = da.GetDetalleOperacionById(id.Value);
+            if (entidad == null)
+            {
+                return NotFound();
+            }
+
+            var modelCab = new DACabeceraEjecuciones();
+            ViewBag.CabEjecuciones = modelCab.GetCabeceraOperacion();
+            return View(entidad);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, DetalleOperacion entidad)
+        {
+            if (id != entidad.IdDetalleOperacion)
+            {
+                return NotFound();
+            }
+
+            entidad.Igv = entidad.Importe * 0.18f;
+            entidad.Total = entidad.Importe + entidad.Igv;
+
+            var da = new DADetalleEjecuciones();
+            var actualizado = da.UpdateDetalleOperacion(entidad);
+
+            if (actualizado)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var modelCab = new DACabeceraEjecuciones();
+            ViewBag.CabEjecuciones = modelCab.GetCabeceraOperacion();
+            return View(entidad);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var da = new DADetalleEjecuciones();
+            var entidad = da.GetDetalleOperacionById(id.Value);
+            if (entidad == null)
+            {
+                return NotFound();
+            }
+
+            return View(entidad);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var da = new DADetalleEjecuciones();
+            da.DeleteDetalleOperacion(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
