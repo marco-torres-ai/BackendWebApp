@@ -12,12 +12,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AngularPolicy", policy =>
@@ -38,24 +39,28 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStaticFiles();
+
 app.UseRouting();
 app.UseCors("AngularPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapStaticAssets();
-//app.UseHttpsRedirection();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+app.MapGet("/", () => Results.Ok(new
+{
+    mensaje = "API BackendWebApp activa y lista para consumir",
+    endpoints = new[]
+    {
+        "GET /api/ejecuciones",
+        "GET /api/ejecuciones/{id}",
+        "POST /api/ejecuciones",
+        "PUT /api/ejecuciones/{id}",
+        "DELETE /api/ejecuciones/{id}",
+        "GET /api/cabeceras"
+    }
+}));
+
 app.MapControllers();
-app.MapRazorPages()
-   .WithStaticAssets();
 
 app.Run();

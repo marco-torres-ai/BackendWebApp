@@ -18,12 +18,14 @@ namespace BackendWebApp.Data.AccesoDatos
             return DetOperacion;
         }
 
-        public int  InsertDetalleOperacion(DetalleOperacion entidad) {
-           var resultado = 0;
-            using (var db=new ApplicationDbContext())
+        public int InsertDetalleOperacion(DetalleOperacion entidad)
+        {
+            var resultado = 0;
+            using (var db = new ApplicationDbContext())
             {
-                db.Add(entidad); // seleccionamos la fila del registro que queremos insertar
-                db.SaveChanges(); // guarda en la bd
+                entidad.CabeceraOperacion = null;
+                db.Add(entidad);
+                db.SaveChanges();
                 resultado = entidad.IdDetalleOperacion;
             }
             return resultado;
@@ -56,7 +58,8 @@ namespace BackendWebApp.Data.AccesoDatos
                     existente.Total = entidad.Total;
                     existente.IdCabeceraOperacion = entidad.IdCabeceraOperacion;
 
-                    resultado = db.SaveChanges() > 0;
+                    db.SaveChanges();
+                    resultado = true;
                 }
             }
             return resultado;

@@ -8,6 +8,7 @@ namespace BackendWebApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Route("api/ejecuciones")]
     [AllowAnonymous]
     [EnableCors("AngularPolicy")]
     public class BackEjecucionesController : ControllerBase
